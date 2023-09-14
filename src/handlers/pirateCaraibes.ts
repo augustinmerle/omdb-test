@@ -1,13 +1,13 @@
 import { Request, Response } from 'express';
 import {appendToSheet, createSheetAndGetURL} from '../services/gsheet'
-import {formatFilmList, getFilm, searchFilmByName} from '../services/omdb'
+import {formatFilmList, getFilmById, searchFilmByName} from '../services/omdb'
 
 export default async(req: Request, res: Response) => {
     try {
         const search = await searchFilmByName('pirates of the caribbean');
-        const myFilmsList = await Promise.allSettled(search.Search.map(async (film: any) => getFilm(film.imdbID)));
+        const myFilmsList = await Promise.allSettled(search.Search.map(async (film: any) => getFilmById(film.imdbID)));
 
-        const result = formatFilmList(myFilmsList);
+        const result = await formatFilmList(myFilmsList);
             //@todo create new sheet if id is missing
         let sheet = {id: '', url:''};
         if (process.env.GSHEET_SPREADSHEET_ID == "") {
