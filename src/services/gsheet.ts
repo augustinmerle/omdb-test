@@ -17,6 +17,9 @@ async function authenticate() {
     google.options({ auth: authClient });
 }
 
+export async function findOrCreateSheet(sheetId: string) {
+
+}
 export async function createSheetAndGetURL(title: string) {
     await authenticate();
 

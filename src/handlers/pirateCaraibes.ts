@@ -9,9 +9,17 @@ export default async(req: Request, res: Response) => {
 
         const result = formatFilmList(myFilmsList);
             //@todo create new sheet if id is missing
+        let sheet = {id: '', url:''};
+        if (process.env.GSHEET_SPREADSHEET_ID == "") {
+                 // @ts-ignore
+                sheet = await createSheetAndGetURL('new Export for Pirates des caraibes')
+        }
+        else {
+             // @ts-ignore
+        sheet = {id: process.env.GSHEET_SPREADSHEET_ID, url: ''}
+        }
 
-            // @ts-ignore
-        appendToSheet(result, process.env.GSHEET_SPREADSHEET_ID)
+        appendToSheet(result, sheet.id)
             .then(response => {
                 console.log('Données ajoutées:', response.data);
             })
