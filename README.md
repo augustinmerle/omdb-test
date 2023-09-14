@@ -39,3 +39,16 @@ to get the JSON of all film base on the search promt `Fast & Furious`
 * [export](http://localhost:5400/export)
 To export a list of film in Gsheet base on the search prompt `Pirates des caraïbes`
 
+* [/auth/films](http://localhost:5400/auth/films)
+  secure route idem to /films needs a Bearer Token
+
+* [/auth/export](http://localhost:5400/auth/export)
+  secure route idem to /export needs a Bearer Token
+
+* [/login](http://localhost:5400/login)
+  login route to authenticate
+
+you can log in with: 
+
+    username: 'john_doe',
+    password: 'jojom'
