@@ -1,8 +1,4 @@
 import { google } from 'googleapis';
-import { JWT } from 'google-auth-library';
-
-
-
 
 const sheets = google.sheets('v4');
 
@@ -13,6 +9,7 @@ async function authenticate() {
     });
 
     const authClient = await auth.getClient();
+
     // @ts-ignore
     google.options({ auth: authClient });
 }
@@ -32,7 +29,7 @@ export async function createSheetAndGetURL(title: string) {
         }
     });
 
-    const spreadsheetId = response.data.spreadsheetId;
+    const spreadsheetId = response.data.spreadsheetId || '';
     const url = `https://docs.google.com/spreadsheets/d/${spreadsheetId}/edit`;
     return {url: url, id: spreadsheetId || ''};
 }
@@ -65,4 +62,24 @@ export async function appendToSheet(data: any[], sheetId: string) {
         }
     };
     return sheets.spreadsheets.values.append(request);
+}
+
+export async function exportToSheet(data: any, sheetName ='') {
+    //@todo create new sheet if id is missing
+    const sheet = (process.env.GSHEET_SPREADSHEET_ID == "") ?
+        await createSheetAndGetURL((sheetName == "")? sheetName: 'new Export from omdb') :
+        {
+            id: process.env.GSHEET_SPREADSHEET_ID || '',
+            url: `https://docs.google.com/spreadsheets/d/${process.env.GSHEET_SPREADSHEET_ID}/edit`
+        };
+
+    return await appendToSheet(data, sheet.id)
+        .then(response => {
+            console.log('Données ajoutées:', response.data);
+            return sheet.url;
+        })
+        .catch(error => {
+            console.error('Erreur lors de l’ajout des données:', error);
+        });
+
 }

@@ -35,11 +35,10 @@ function hasStarWarsActor(actors: string, starWarsActors: any): boolean {
 //@todo remove use of PromiseSettledResult
 export async function formatFilmList(data: PromiseSettledResult<any>[]) {
     const starWarsData = await getFilmByName('Star Wars');
-    // @ts-ignore
+
     const result = data.map(filmResult => {
         if (filmResult.status === "fulfilled") {
-            const film = filmResult.value; // Ici, vous accédez à la valeur réelle du film
-            // @ts-ignore
+            const film = filmResult.value;
             return {
                 title: film.Title,
                 Image: film.Poster,
