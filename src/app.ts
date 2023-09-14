@@ -1,7 +1,10 @@
 import express from 'express';
 import * as handlers from "./handlers";
 import {json} from "body-parser";
+import dotenv from 'dotenv';
 
+
+dotenv.config();
 const app = express();
 app.use(json())
 
@@ -14,6 +17,7 @@ app.all('/*', (req,res,next) => {
 
 app.get('/', handlers.root)
 app.get('/films', handlers.fastFurious)
+app.get('/export', handlers.pirateCaraibes)
 
 
 // app.listen(PORT, () => {

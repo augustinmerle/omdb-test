@@ -1,0 +1,30 @@
+import { Request, Response } from 'express';
+import {appendToSheet, createSheetAndGetURL} from '../services/gsheet'
+import {formatFilmList, getFilm, searchFilmByName} from '../services/omdb'
+
+export default async(req: Request, res: Response) => {
+    try {
+        const search = await searchFilmByName('pirates of the caribbean');
+        const myFilmsList = await Promise.allSettled(search.Search.map(async (film: any) => getFilm(film.imdbID)));
+
+        const result = formatFilmList(myFilmsList);
+            //@todo create new sheet if id is missing
+
+            // @ts-ignore
+        appendToSheet(result, process.env.GSHEET_SPREADSHEET_ID)
+            .then(response => {
+                console.log('Données ajoutées:', response.data);
+            })
+            .catch(error => {
+                console.error('Erreur lors de l’ajout des données:', error);
+            });
+
+        // @ts-ignore
+        res.status(201).send(`file populated see: https://docs.google.com/spreadsheets/d/${process.env.GSHEET_SPREADSHEET_ID}/edit`);
+
+    } catch (error) {
+        console.error('Erreur lors de l\'appel à l\'API externe:', error);
+        res.status(500).send('Erreur lors de l\'appel à l\'API externe');
+    }
+};
+
