@@ -18,10 +18,12 @@ app.all('/*', (req,res,next) => {
 });
 
 app.get('/', handlers.root)
-app.post('/login', handlers.login)
 app.get('/films', handlers.fastFurious)
 app.get('/export', handlers.pirateCaraibes)
 app.get('/auth/films',authenticateJWT, handlers.fastFurious)
 app.get('/auth/export',authenticateJWT, handlers.pirateCaraibes)
+
+app.post('/login', handlers.login)
+app.post('/search', handlers.filmFetcher)
 
 export default app;

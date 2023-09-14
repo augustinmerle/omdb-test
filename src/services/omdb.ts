@@ -58,3 +58,9 @@ export async function formatFilmList(data: PromiseSettledResult<any>[]) {
     });
     return result;
 }
+export async function searchFilmsByNameAndFormat(filmName: string){
+    const search = await searchFilmByName(filmName);
+    const myFilmsList = await Promise.allSettled(search.Search.map(async (film: any) => getFilmById(film.imdbID)));
+    return  await formatFilmList(myFilmsList);
+
+}

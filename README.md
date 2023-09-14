@@ -31,7 +31,7 @@ Starting the project:
     $ make start
 
 
-This app use Express Js ands respond to 2 endpoints:
+This app use Express Js ands respond to this endpoints:
 
 * [/films](http://localhost:5400/films)
 to get the JSON of all film base on the search promt `Fast & Furious`
@@ -44,6 +44,15 @@ To export a list of film in Gsheet base on the search prompt `Pirates des caraï
 
 * [/auth/export](http://localhost:5400/auth/export)
   secure route idem to /export needs a Bearer Token
+
+* [/search](http://localhost:5400/search)
+  universsal search route param
+
+
+    {
+     "search": "donald", 
+     "export": "true" 
+    }
 
 * [/login](http://localhost:5400/login)
   login route to authenticate

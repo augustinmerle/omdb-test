@@ -34,7 +34,7 @@ export async function createSheetAndGetURL(title: string) {
 
     const spreadsheetId = response.data.spreadsheetId;
     const url = `https://docs.google.com/spreadsheets/d/${spreadsheetId}/edit`;
-    return {url: url, id: spreadsheetId};
+    return {url: url, id: spreadsheetId || ''};
 }
 async function clearSheet(sheetId: string) {
     await authenticate();
