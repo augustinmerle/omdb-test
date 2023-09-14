@@ -2,8 +2,6 @@ import express from 'express';
 import * as handlers from "./handlers";
 import {json} from "body-parser";
 import dotenv from 'dotenv';
-const jwt = require('jsonwebtoken');
-import {expressjwt} from "express-jwt";
 import {authenticateJWT} from "./services/auth";
 
 
@@ -18,8 +16,8 @@ app.all('/*', (req,res,next) => {
 });
 
 app.get('/', handlers.root)
-app.get('/films', handlers.fastFurious)
-app.get('/export', handlers.pirateCaraibes)
+app.get('/films',handlers.fastFurious, handlers.filmFetcher)
+app.get('/export',handlers.pirateCaraibes, handlers.filmFetcher)
 app.get('/auth/films',authenticateJWT, handlers.fastFurious)
 app.get('/auth/export',authenticateJWT, handlers.pirateCaraibes)
 

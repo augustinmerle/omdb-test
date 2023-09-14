@@ -10,7 +10,7 @@ export default async(req: Request, res: Response) => {
         console.log(req.body.search)
         const result = await searchFilmsByNameAndFormat(req.body.search);
 
-        if (req.body.export) {
+        if (req.body.format == "gsheet") {
             //@todo create new sheet if id is missing
             const sheet = (process.env.GSHEET_SPREADSHEET_ID == "") ?
                 await createSheetAndGetURL('new Export for Pirates des caraibes') :
@@ -30,6 +30,7 @@ export default async(req: Request, res: Response) => {
 
             res.status(201).send(`file populated see: ${sheet.url}`);
         }
+
         else {
             res.json(result);
         }

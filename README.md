@@ -51,7 +51,7 @@ To export a list of film in Gsheet base on the search prompt `Pirates des caraï
 
     {
      "search": "donald", 
-     "export": "true" 
+     "format": "gsheet|json" 
     }
 
 * [/login](http://localhost:5400/login)
