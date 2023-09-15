@@ -18,8 +18,8 @@ app.all('/*', (req,res,next) => {
 app.get('/', handlers.root)
 app.get('/films',handlers.fastFurious, handlers.filmFetcher)
 app.get('/export',handlers.pirateCaraibes, handlers.filmFetcher)
-app.get('/auth/films',authenticateJWT, handlers.fastFurious)
-app.get('/auth/export',authenticateJWT, handlers.pirateCaraibes)
+app.get('/auth/films',authenticateJWT, handlers.fastFurious, handlers.filmFetcher)
+app.get('/auth/export',authenticateJWT, handlers.pirateCaraibes, handlers.filmFetcher)
 
 app.post('/login', handlers.login)
 app.post('/search', handlers.filmFetcher)
