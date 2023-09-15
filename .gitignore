@@ -3,5 +3,6 @@ yarn-error.log
 .DS_Store
 .env*
 lib/
-
+coverage/
+atc-it-SC.json
 
