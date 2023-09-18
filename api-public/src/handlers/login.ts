@@ -4,7 +4,7 @@ import { checkLogin, generateToken} from "../services/auth";
 export default async(req: Request, res: Response) => {
     const { username, password } = req.body;
 
-    if (checkLogin(username, password)) {
+    if (await checkLogin(username, password)) {
         res.json(generateToken(username));
     } else {
         res.status(401).json({ error: 'Utilisateur ou mot de passe invalide' });
