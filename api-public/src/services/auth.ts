@@ -1,17 +1,15 @@
 import {expressjwt} from "express-jwt";
+import {findUserByUsername, User} from "./users"
 const jwt = require('jsonwebtoken');
 
 const SECRET_KEY = (process.env.JWT_SECRET_KEY)? process.env.JWT_SECRET_KEY: 'test_my_secret' ;  // Générez une clé robuste pour votre production
 
 // Lors de la connexion ou de l'inscription
-export const user = {
-    id: 1,
-    username: 'john_doe',
-    password: 'jojom'
-}
 
-export function checkLogin(username: string, password: string) {
-    return (username === user.username && password === user.password)? true: false;
+
+export async function checkLogin(username: string, password: string) {
+    const user: User = await findUserByUsername(username) || {username: '', password: ""};
+        return (username === user.username && password === user.password) ? true : false;
 }
 export function generateToken(username: string) {
     const tokenPayload = {

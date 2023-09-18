@@ -1,27 +1,22 @@
 env ?= dev
 DEBUG ?=
 
-build: ## Build
-	@yarn --silent build
+build: build-api-public build-api-user## Build
 
-clean: clean-modules clean-coverage
-clean-coverage: ## Remove test coverage directory
-	@rm -rf coverage/
-clean-modules: ## Remove Javascript dependencies directory
-	@rm -rf node_modules/
+build-api-public:
+	@make -C api-public/ build env=$(env)
 
-install: ## Install the Javascript dependencies
-	@yarn --silent install
+build-api-user:
+	@make -C api-user/ build env=$(env)
 
-start: ## Start (local)
-	@PORT=5400 DEBUG=$(DEBUG)  yarn --silent start
+start-api-user:
+	@make -C api-user/ start env=$(env)
 
-test: ## Execute the tests
-	@CI=true yarn --silent test --all --color --coverage --detectOpenHandles
+start-api-public:
+	@make -C api-public/ start env=$(env)
+
+start:
+	@npx concurrently -n api-user api-public "make start-api-user" "make start-api-public"
 
 .DEFAULT_GOAL := install
-.PHONY: build \
-		clean clean-coverage clean-modules \
-		install \
-		start \
-		test \
+.PHONY: build start start-api-public start-api-user
