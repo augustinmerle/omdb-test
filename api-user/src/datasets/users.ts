@@ -7,8 +7,12 @@
         {
             username: 'PaulAuster',
             password: '12345',
-
         },
+        {
+            username: 'john_doe',
+            password: 'jojom',
+        },
+
     ];
     export function getUsers() {
         return users

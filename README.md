@@ -59,5 +59,13 @@ To export a list of film in Gsheet base on the search prompt `Pirates des caraï
 
 you can log in with: 
 
-    username: 'john_doe',
-    password: 'jojom'
+
+      username: 'mat',
+      password: '12345',
+ 
+      username: 'PaulAuster',
+      password: '12345',
+  
+      username: 'john_doe',
+      password: 'jojom',
+  
